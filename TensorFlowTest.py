@@ -21,7 +21,7 @@ def extract_features(image):
 
     try:
         with tf.Session() as sess:
-            next_to_last_tensor = sess.graph.get_tensor_by_name('pool3:0')
+            next_to_last_tensor = sess.graph.get_tensor_by_name('pool_3:0')
             image_data = gfile.FastGFile(image, 'rb').read()
             start_time = time.clock()
             predictions = sess.run(next_to_last_tensor, {'DecodeJpeg/contents:0':image_data})
