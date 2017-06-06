@@ -1,5 +1,6 @@
 from os.path import dirname,exists,join
 from datetime import datetime
+import time
 import tensorflow as tf
 from tensorflow.python.platform import gfile
 import numpy as np
@@ -22,10 +23,13 @@ def extract_features(image):
         with tf.Session() as sess:
             next_to_last_tensor = sess.get_tensor_by_name('pool3:0')
             image_data = gfile.FastGFile(image, 'rb').read()
+            start_time = time.clock()
             predictions = sess.run(next_to_last_tensor, {'DecodeJpeg/contents:0':image_data})
+            print time.clock() - start_time, "seconds"
             feature = np.squeeze(predictions)
     except Exception as e:
         print e
     return feature
 
 create_graph()
+extract_features(join(image_dir, '2475.jpg'))
